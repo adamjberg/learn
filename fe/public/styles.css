@@ -1,0 +1,31 @@
+.container {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+}
+
+.card {
+  margin: 0 20px;
+}
+
+.card img {
+  height: 405px;
+  /* width: 720px; */
+  object-fit: cover;
+}
+
+.col-md-6 {
+  width: 50%;
+}
+
+.row {
+  display: flex;
+}
+
+* {
+  box-sizing: content-box;
+}
