@@ -15,6 +15,16 @@ type Listener = (update: Update) => void;
 class BrowserHistory {
   private listeners: Listener[] = [];
 
+  constructor() {
+    window.addEventListener("popstate", (event) => {
+      this.listeners.forEach((listener) => {
+        listener({
+          location: document.location.pathname
+        });
+      });
+    })
+  }
+
   public push(to: string) {
     history.pushState({}, "", to);
     const update: Update = {
