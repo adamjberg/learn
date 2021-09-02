@@ -4,18 +4,58 @@ type RouterProps = {
   routes: {
     path: string;
     component: Component;
-  }[]
+  }[];
+};
+
+type Update = {
+  location: string;
+};
+
+type Listener = (update: Update) => void;
+class BrowserHistory {
+  private listeners: Listener[] = [];
+
+  public push(to: string) {
+    history.pushState({}, "", to);
+    const update: Update = {
+      location: to,
+    };
+    this.listeners.forEach((listener) => {
+      listener(update);
+    });
+  }
+
+  public listen(listener: Listener) {
+    this.listeners.push(listener);
+  }
+}
+
+const browserHistory = new BrowserHistory();
+
+function removeAllChildNodes(parent: HTMLElement) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
 }
 
 function Router(props: RouterProps) {
   const el = document.createElement("div");
-  const path = document.location.pathname
 
-  for (const route of props.routes) {
-    if (route.path === path) {
-      el.appendChild(route.component());
+  browserHistory.listen((update) => {
+    render();
+  });
+
+  function render() {
+    const path = document.location.pathname;
+    removeAllChildNodes(el);
+    for (const route of props.routes) {
+      if (route.path === path) {
+        el.appendChild(route.component());
+      }
     }
   }
+
+  render();
 
   return el;
 }
@@ -32,9 +72,14 @@ function Row() {
   return el;
 }
 
-function Card(props: { img: string; title: string }) {
+function Card(props: { href: string; img: string; title: string }) {
   const el = document.createElement("div");
   el.setAttribute("class", "card");
+
+  el.addEventListener("click", (event) => {
+    event.preventDefault();
+    browserHistory.push(props.href);
+  });
 
   const img = document.createElement("img");
   img.setAttribute("src", props.img);
@@ -54,36 +99,31 @@ function HomePage() {
 
   const cardProps = [
     {
+      href: "/posts/1",
       img: "/static/AdamsWorld-0.0.1.png",
       title: "Create a React App with Create-React-App",
-    },
-    {
-      img: "/static/AdamsWorld-0.0.1.png",
-      title: "Build a Personal Finance App",
     }
   ];
 
   cardProps.forEach((cardProp) => {
-    container.appendChild(
-      Card(cardProp)
-    );
-  })
+    container.appendChild(Card(cardProp));
+  });
 
-  el.appendChild(container)
+  el.appendChild(container);
 
   return el;
 }
 
 function ViewPostPage() {
-  const el  = document.createElement("div");
+  const el = document.createElement("div");
 
   const container = Container();
   const h1 = document.createElement("h1");
   h1.innerText = "View Post";
 
-  container.appendChild(h1)
+  container.appendChild(h1);
 
-  el.appendChild(container)
+  el.appendChild(container);
 
   return el;
 }
@@ -91,37 +131,20 @@ function ViewPostPage() {
 function App() {
   const el = document.createElement("div");
 
-  const container = Container();
-
-  const cardProps = [
-    {
-      img: "/static/AdamsWorld-0.0.1.png",
-      title: "Create a React App with Create-React-App",
-    },
-    {
-      img: "/static/AdamsWorld-0.0.1.png",
-      title: "Build a Personal Finance App",
-    }
-  ];
-
-  cardProps.forEach((cardProp) => {
-    container.appendChild(
-      Card(cardProp)
-    );
-  })
-
-  el.appendChild(Router({
-    routes: [
-      {
-        path: "/",
-        component: HomePage
-      },
-      {
-        path: "/posts/:id",
-        component: ViewPostPage
-      }
-    ]
-  }));
+  el.appendChild(
+    Router({
+      routes: [
+        {
+          path: "/",
+          component: HomePage,
+        },
+        {
+          path: "/posts/1",
+          component: ViewPostPage,
+        },
+      ],
+    })
+  );
 
   return el;
 }
