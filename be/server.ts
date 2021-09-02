@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 
 const app = express();
 
@@ -8,13 +9,18 @@ app.use("/static", express.static("../fe/built/static"));
 app.get("/api/posts/:id", (req, res, next) => {
   const { id } = req.params;
 
-  return res.json({
-    data: {
-      id,
-      title: "Hello World",
-      body: "testing 123"
-    }
-  })
+  fs.readFile("posts/create-skeleton-app.md", (err, data) => {
+
+    
+
+    res.json({
+      data: {
+        id,
+        title: "Hello World",
+        body: data.toString()
+      }
+    })
+  })  
 })
 
 app.use((req, res) => {

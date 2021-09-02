@@ -170,12 +170,14 @@ function ViewPostPage() {
     h1.innerText = post.title;
 
     const body = document.createElement("div");
-    body.innerText = post.body;
+    body.innerHTML = marked(post.body);
 
     container.appendChild(h1);
     container.appendChild(body);
 
     el.appendChild(container);
+
+    Prism.highlightAll();
   }
 
   render();

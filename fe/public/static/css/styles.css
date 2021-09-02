@@ -26,6 +26,10 @@ img {
   display: flex;
 }
 
+pre {
+  overflow-x: scroll;
+}
+
 * {
   box-sizing: content-box;
 }
