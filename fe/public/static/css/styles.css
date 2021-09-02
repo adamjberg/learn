@@ -8,9 +8,7 @@ img {
   width: 100%;
 }
 
-.card {
-
-}
+.card {}
 
 .card img {
   height: 405px;
@@ -28,6 +26,12 @@ img {
 
 pre {
   overflow-x: scroll;
+}
+
+code {
+  color: #EB5757;
+  background: rgba(135, 131, 120, 0.15);
+  padding: 0.2em 0.4em;
 }
 
 * {
