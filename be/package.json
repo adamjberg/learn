@@ -1,0 +1,13 @@
+{
+  "name": "be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node built/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "typescript": "^4.4.2"
+  }
+}
