@@ -65,6 +65,21 @@ function removeAllChildNodes(parent: HTMLElement) {
   }
 }
 
+function Link(props: { to: string, children: HTMLElement }) {
+  const el = document.createElement("a");
+
+  el.addEventListener("click", function (event) {
+    event.preventDefault();
+    browserHistory.push(props.to);
+  });
+
+  el.setAttribute("href", props.to);
+
+  el.appendChild(props.children)
+
+  return el;
+}
+
 function Router(props: RouterProps) {
   const el = document.createElement("div");
 
@@ -75,6 +90,14 @@ function Router(props: RouterProps) {
   function render() {
     const path = document.location.pathname;
     removeAllChildNodes(el);
+
+    const container = Container();
+    el.appendChild(container);
+
+    const homeLink = document.createElement("div");
+    homeLink.innerText = "Home";
+    container.appendChild(Link({ to: "/", children: homeLink }));
+
     for (const route of props.routes) {
       if (route.path === path) {
         el.appendChild(route.component());
@@ -103,11 +126,6 @@ function Card(props: { href: string; img: string; title: string }) {
   const el = document.createElement("div");
   el.setAttribute("class", "card");
 
-  el.addEventListener("click", (event) => {
-    event.preventDefault();
-    browserHistory.push(props.href);
-  });
-
   const img = document.createElement("img");
   img.setAttribute("src", props.img);
   el.appendChild(img);
@@ -116,7 +134,7 @@ function Card(props: { href: string; img: string; title: string }) {
   title.innerText = props.title;
   el.appendChild(title);
 
-  return el;
+  return Link({ to: props.href, children: el });
 }
 
 function HomePage() {
@@ -160,7 +178,7 @@ function ViewPostPage() {
     el.appendChild(container);
   }
 
-  render()
+  render();
 
   return el;
 }
