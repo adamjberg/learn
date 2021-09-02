@@ -19,10 +19,10 @@ class BrowserHistory {
     window.addEventListener("popstate", (event) => {
       this.listeners.forEach((listener) => {
         listener({
-          location: document.location.pathname
+          location: document.location.pathname,
         });
       });
-    })
+    });
   }
 
   public push(to: string) {
@@ -40,11 +40,28 @@ class BrowserHistory {
   }
 }
 
+class Api {
+  constructor(public baseUrl: string) {}
+
+  public async get(id: string) {
+    const res = await fetch(`${this.baseUrl}/${id}`);
+    const jsonData = await res.json();
+    return jsonData.data;
+  }
+}
+class PostApi extends Api {
+  constructor() {
+    super("/api/posts");
+  }
+}
+
+const postApi = new PostApi();
+
 const browserHistory = new BrowserHistory();
 
 function removeAllChildNodes(parent: HTMLElement) {
   while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
+    parent.removeChild(parent.firstChild);
   }
 }
 
@@ -112,7 +129,7 @@ function HomePage() {
       href: "/posts/1",
       img: "/static/AdamsWorld-0.0.1.png",
       title: "Create a React App with Create-React-App",
-    }
+    },
   ];
 
   cardProps.forEach((cardProp) => {
@@ -127,13 +144,23 @@ function HomePage() {
 function ViewPostPage() {
   const el = document.createElement("div");
 
-  const container = Container();
-  const h1 = document.createElement("h1");
-  h1.innerText = "View Post";
+  async function render() {
+    const post = await postApi.get("1");
 
-  container.appendChild(h1);
+    const container = Container();
+    const h1 = document.createElement("h1");
+    h1.innerText = post.title;
 
-  el.appendChild(container);
+    const body = document.createElement("div");
+    body.innerText = post.body;
+
+    container.appendChild(h1);
+    container.appendChild(body);
+
+    el.appendChild(container);
+  }
+
+  render()
 
   return el;
 }
