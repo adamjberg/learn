@@ -43,6 +43,12 @@ class BrowserHistory {
 class Api {
   constructor(public baseUrl: string) {}
 
+  public async getAll() {
+    const res = await fetch(`${this.baseUrl}`);
+    const jsonData = await res.json();
+    return jsonData.data;
+  }
+
   public async get(id: string) {
     const res = await fetch(`${this.baseUrl}/${id}`);
     const jsonData = await res.json();
@@ -65,7 +71,7 @@ function removeAllChildNodes(parent: HTMLElement) {
   }
 }
 
-function Link(props: { to: string, children: HTMLElement }) {
+function Link(props: { to: string; children: HTMLElement }) {
   const el = document.createElement("a");
 
   el.addEventListener("click", function (event) {
@@ -75,7 +81,7 @@ function Link(props: { to: string, children: HTMLElement }) {
 
   el.setAttribute("href", props.to);
 
-  el.appendChild(props.children)
+  el.appendChild(props.children);
 
   return el;
 }
@@ -140,21 +146,27 @@ function Card(props: { href: string; img: string; title: string }) {
 function HomePage() {
   const el = document.createElement("div");
 
-  const container = Container();
+  async function render() {
+    const posts = await postApi.getAll();
 
-  const cardProps = [
-    {
-      href: "/posts/1",
-      img: "/static/AdamsWorld-0.0.1.png",
-      title: "Create a React App with Create-React-App",
-    },
-  ];
+    const container = Container();
 
-  cardProps.forEach((cardProp) => {
-    container.appendChild(Card(cardProp));
-  });
+    const cardProps = posts.map((post: any) => {
+      return {
+        href: `/posts/${post.id}`,
+        img: "/static/img/skeleton.jpg",
+        title: post.title
+      }
+    });
 
-  el.appendChild(container);
+    cardProps.forEach((cardProp: any) => {
+      container.appendChild(Card(cardProp));
+    });
+
+    el.appendChild(container);
+  }
+
+  render();
 
   return el;
 }
