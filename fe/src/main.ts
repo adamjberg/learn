@@ -178,9 +178,12 @@ function HomePage() {
 
 function ViewPostPage() {
   const el = document.createElement("div");
+  const pathname = document.location.pathname;
+  const splitPathname = pathname.split("/");
+  const id = splitPathname[splitPathname.length - 1];
 
   async function render() {
-    const post = await postApi.get("1");
+    const post = await postApi.get(id);
 
     const container = Container();
     const h1 = document.createElement("h1");
@@ -214,6 +217,10 @@ function App() {
         },
         {
           path: "/posts/1",
+          component: ViewPostPage,
+        },
+        {
+          path: "/posts/2",
           component: ViewPostPage,
         },
       ],
