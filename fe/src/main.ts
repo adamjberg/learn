@@ -136,9 +136,14 @@ function Card(props: { href: string; img: string; title: string }) {
   img.setAttribute("src", props.img);
   el.appendChild(img);
 
+  const cardBody = document.createElement("div");
+  cardBody.setAttribute("class", "card-body");
+  el.append(cardBody)
+
   const title = document.createElement("div");
+  title.setAttribute("class", "card-title");
   title.innerText = props.title;
-  el.appendChild(title);
+  cardBody.appendChild(title);
 
   return Link({ to: props.href, children: el });
 }
