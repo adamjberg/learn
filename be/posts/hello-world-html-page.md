@@ -41,3 +41,24 @@ scp index.html root@143.198.32.125:/var/www/html/
 ## Confirm `helloworld.yourdomain.com` Displays Hello World Message
 
 Navigate to helloworld.yourdomain.com in your browser and confirm you can see the "Hello World" message.
+
+## Submission
+
+<form id="submit">
+  <label for="url">URL</label><br>
+  <input name="url" placeholder="http://helloworld.devtails.xyz"/>
+  <input type="submit">
+</form>
+
+<script>
+  console.log("Hello")
+  const form = document.getElementById("submit");
+  console.log(form)
+
+  form.addEventListener("submit", submitProject)
+
+  function submitProject(e) {
+    e.preventDefault();
+    console.log("submit")
+  }
+</script>

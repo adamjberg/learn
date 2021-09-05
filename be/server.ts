@@ -44,9 +44,10 @@ app.get("/api/posts/:slug", (req, res, next) => {
   })
 })
 
-app.get("/api/project/:id/submit", async (req, res, next) => {
+app.post("/api/projects/:id/submit", async (req, res, next) => {
   try {
-    const response = await axios.get("https://helloworld.devtails.xyz");
+    const { url } = req.query;
+    const response = await axios.get(url as string);
 
     const $ = cheerio.load(response.data);
     const h1 = $('h1')
