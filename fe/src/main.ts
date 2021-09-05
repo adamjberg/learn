@@ -72,6 +72,10 @@ function removeAllChildNodes(parent: HTMLElement) {
   }
 }
 
+function Div() {
+  return document.createElement("div");
+}
+
 function Link(props: { to: string; children: HTMLElement }) {
   const el = document.createElement("a");
 
@@ -167,7 +171,13 @@ function HomePage() {
     });
 
     cardProps.forEach((cardProp: any) => {
-      container.appendChild(Card(cardProp));
+      const cardWrapper = Div();
+      cardWrapper.setAttribute("class", "mb-3");
+
+      const card = Card(cardProp);
+      cardWrapper.appendChild(card);
+      
+      container.appendChild(cardWrapper);
     });
 
     el.appendChild(container);
