@@ -6,6 +6,8 @@ import axios from "axios";
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
 const posts = [
   { id: "1", title: "Hello World Static Web Page", slug: "hello-world-html-page", cover: "hello-world-static-web-page.jpg"},
   { id: "2", title: "How to Set Up Hosting With Digital Ocean", slug: "how-to-set-up-hosting-with-digitalocean", cover: "how-to-set-up-hosting-with-digitalocean.jpg"},
@@ -46,7 +48,7 @@ app.get("/api/posts/:slug", (req, res, next) => {
 
 app.post("/api/projects/:id/submit", async (req, res, next) => {
   try {
-    const { url } = req.query;
+    const { url } = req.body;
     const response = await axios.get(url as string);
 
     const $ = cheerio.load(response.data);
@@ -58,9 +60,11 @@ app.post("/api/projects/:id/submit", async (req, res, next) => {
       success = true
     }
 
-    res.json({
-      success
+    const post = posts.find((p) => {
+      return p.id === req.params.id;
     })
+
+    res.redirect(`/posts/${post?.slug}`)
   } catch(err) {
     return next(err);
   }
