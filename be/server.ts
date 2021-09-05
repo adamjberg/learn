@@ -1,6 +1,8 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+import cheerio from "cheerio";
+import axios from "axios";
 
 const app = express();
 
@@ -40,6 +42,27 @@ app.get("/api/posts/:slug", (req, res, next) => {
       }
     })
   })
+})
+
+app.get("/api/project/:id/submit", async (req, res, next) => {
+  try {
+    const response = await axios.get("https://helloworld.devtails.xyz");
+
+    const $ = cheerio.load(response.data);
+    const h1 = $('h1')
+
+    let success = false;
+
+    if (h1.text() === "Hello World") {
+      success = true
+    }
+
+    res.json({
+      success
+    })
+  } catch(err) {
+    return next(err);
+  }
 })
 
 app.use((req, res) => {
