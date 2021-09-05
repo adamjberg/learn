@@ -1,4 +1,11 @@
-1. Head to [namecheap Dashboard](https://ap.www.namecheap.com/)
-2. Click Manage Button on New Domain
-3. Click Advanced DNS
-4. Add A Record with Host `helloworld` and Value to the IP Address of the server you created earlier
+## 1. Head to [namecheap Dashboard](https://ap.www.namecheap.com/) and Click "Manage"
+![](/static/img/namecheap-dns-0.png)
+
+## 2. Click Advanced DNS
+![](/static/img/namecheap-dns-1.png)
+
+## 3. Click "Add New Record"
+![](/static/img/namecheap-dns-2.png)
+
+## 4. Add "A Record" with Host `helloworld` and Value to the IP Address of the server you created earlier
+![](/static/img/namecheap-dns-3.png)

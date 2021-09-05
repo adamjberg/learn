@@ -19,11 +19,25 @@
 
 Add `<h1>Hello World</h1>` between the `<body></body>` HTML tags.
 
-## Commit Changes to Public Github Repository
+## [Set Up Hosting With Digital Ocean](/posts/how-to-set-up-hosting-with-digitalocean)
+## [Register a Domain With namecheap](/posts/how-to-register-domain-with-namecheap)
+
+## [Configure DNS to Point to Digital Ocean Server](/posts/how-to-configure-namecheap-dns-to-point-domain-to-digitalocean-server)
 
 ## Deploy to `helloworld.yourdomain.com`
 
-### [Set Up Hosting With Digital Ocean](/posts/how-to-set-up-hosting-with-digitalocean)
-### [Register a Domain With namecheap](/posts/how-to-register-a-domain-with-namecheap)
+### Install nginx
 
-### [Configure DNS to Point to Digital Ocean Server](/posts/how-to-configure-namecheap-dns-to-point-domain-to-digitalocean-server)
+```bash
+sudo apt-get install nginx
+```
+
+### Copy `index.html` to `/var/www`
+
+```bash
+scp index.html root@143.198.32.125:/var/www/html/
+```
+
+## Confirm `helloworld.yourdomain.com` Displays Hello World Message
+
+Navigate to helloworld.yourdomain.com in your browser and confirm you can see the "Hello World" message.
