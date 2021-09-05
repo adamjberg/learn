@@ -134,6 +134,22 @@ function Router(props: RouterProps) {
     const aboutLink = Link({ to: "/about", text: "About", class: "ml-2" });
     container.appendChild(aboutLink);
 
+    const ad = Div();
+    ad.innerHTML = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7354863641392041"
+                        crossorigin="anonymous"></script>
+                    <!-- Horizontal -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-7354863641392041"
+                        data-ad-slot="6895518863"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>`;
+
+    container.appendChild(ad)
+
     for (const route of props.routes) {
       let isActiveRoute = route.exact
         ? route.path === path
