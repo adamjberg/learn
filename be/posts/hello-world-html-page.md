@@ -23,12 +23,7 @@ Add `<h1>Hello World</h1>` between the `<body></body>` HTML tags.
 
 ## Deploy to `helloworld.yourdomain.com`
 
-### [Set Up Hosting With Digital Ocean](/posts/2)
-### [Register Your Domain With namecheap](/posts/3)
+### [Set Up Hosting With Digital Ocean](/posts/how-to-set-up-hosting-with-digitalocean)
+### [Register a Domain With namecheap](/posts/how-to-register-a-domain-with-namecheap)
 
-### [Set up Your DNS With namecheap](/posts/4)
-
-1. Head to [namecheap Dashboard](https://ap.www.namecheap.com/)
-2. Click Manage Button on New Domain
-3. Click Advanced DNS
-4. Add A Record with Host `helloworld` and Value to the IP Address of the server you created earlier
+### [Configure DNS to Point to Digital Ocean Server](/posts/how-to-configure-namecheap-dns-to-point-domain-to-digitalocean-server)
