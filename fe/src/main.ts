@@ -72,11 +72,22 @@ function removeAllChildNodes(parent: HTMLElement) {
   }
 }
 
-function Div() {
-  return document.createElement("div");
+function Div(props?: { text?: string }) {
+  const el = document.createElement("div");
+
+  if (props?.text) {
+    el.innerText = props.text;
+  }
+
+  return el;
 }
 
-function Link(props: { to: string; children: HTMLElement }) {
+function Link(props: {
+  to: string;
+  children?: HTMLElement;
+  text?: string;
+  class?: string;
+}) {
   const el = document.createElement("a");
 
   el.addEventListener("click", function (event) {
@@ -86,7 +97,17 @@ function Link(props: { to: string; children: HTMLElement }) {
 
   el.setAttribute("href", props.to);
 
-  el.appendChild(props.children);
+  if (props.text) {
+    el.innerText = props.text;
+  }
+
+  if (props.class) {
+    el.setAttribute("class", props.class);
+  }
+
+  if (props.children) {
+    el.appendChild(props.children);
+  }
 
   return el;
 }
@@ -102,15 +123,21 @@ function Router(props: RouterProps) {
     const path = document.location.pathname;
     removeAllChildNodes(el);
 
-    const container = Container();
-    el.appendChild(container);
+    const header = document.createElement("header");
+    el.appendChild(header);
 
-    const homeLink = document.createElement("div");
-    homeLink.innerText = "Home";
-    container.appendChild(Link({ to: "/", children: homeLink }));
+    const container = Container();
+    header.appendChild(container);
+
+    container.appendChild(Link({ to: "/", text: "Home" }));
+
+    const aboutLink = Link({ to: "/about", text: "About", class: "ml-2" });
+    container.appendChild(aboutLink);
 
     for (const route of props.routes) {
-      let isActiveRoute = route.exact ? route.path === path : path.includes(route.path);
+      let isActiveRoute = route.exact
+        ? route.path === path
+        : path.includes(route.path);
       if (isActiveRoute) {
         el.appendChild(route.component());
       }
@@ -144,7 +171,7 @@ function Card(props: { href: string; img: string; title: string }) {
 
   const cardBody = document.createElement("div");
   cardBody.setAttribute("class", "card-body");
-  el.append(cardBody)
+  el.append(cardBody);
 
   const title = document.createElement("div");
   title.setAttribute("class", "card-title");
@@ -166,8 +193,8 @@ function HomePage() {
       return {
         href: `/posts/${post.slug}`,
         img: `/static/img/${post.cover}`,
-        title: post.title
-      }
+        title: post.title,
+      };
     });
 
     cardProps.forEach((cardProp: any) => {
@@ -176,7 +203,7 @@ function HomePage() {
 
       const card = Card(cardProp);
       cardWrapper.appendChild(card);
-      
+
       container.appendChild(cardWrapper);
     });
 
@@ -217,6 +244,29 @@ function ViewPostPage() {
   return el;
 }
 
+function AboutPage() {
+  const el = Container();
+
+  el.innerHTML = marked(`
+  ## Hello, my name is Adam
+
+  and after 11 years of programming, I'm still disappointed in the state of programming tutorials across the web and the pace that new developers are able to level up.  
+
+  ## Project Based Learning
+
+  I strongly believe that project based learning is the way to go and so the learning on this site will be centered around that.  Each project will conclude with something deployed to your own domain on your own server. Each project will build upon the knowledge learned from the previous one. 
+
+  ## Technology Paralysis
+
+  "Should I use X or Y?" is one of the largest barriers to getting started.  Instead of covering all possible ways of solving a problem, I instead intend to stick to whatever I know best. Once you have made it far enough along, it should be easy enough to transfer the knowledge to whatever other service or technology you hope to use.  
+
+  ## Help Me Help You
+
+  This site is in its infancy as I determine whether I can help or if I'm just adding more 💩to the pile. If you have any feedback please email me at [adam@xyzdigital.com](adam@xyzdigital.com).
+`);
+  return el;
+}
+
 function App() {
   const el = document.createElement("div");
 
@@ -229,9 +279,13 @@ function App() {
           component: HomePage,
         },
         {
+          path: "/about",
+          component: AboutPage,
+        },
+        {
           path: "/posts",
           component: ViewPostPage,
-        }
+        },
       ],
     })
   );
