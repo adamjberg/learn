@@ -223,6 +223,10 @@ function App() {
           path: "/posts/2",
           component: ViewPostPage,
         },
+        {
+          path: "/posts/3",
+          component: ViewPostPage,
+        },
       ],
     })
   );
