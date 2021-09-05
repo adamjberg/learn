@@ -5,9 +5,9 @@ import fs from "fs";
 const app = express();
 
 const posts = [
-  { id: "1", title: "Hello World Static Web Page", slug: "hello-world-html-page"},
-  { id: "2", title: "How to Set Up Hosting With Digital Ocean", slug: "how-to-set-up-hosting-with-digitalocean"},
-  { id: "3", title: "Build a Skeleton Mongo, Express, React, Node (MERN) App", slug: "create-skeleton-app" },
+  { id: "1", title: "Hello World Static Web Page", slug: "hello-world-html-page", cover: "hello-world-static-web-page.jpg"},
+  { id: "2", title: "How to Set Up Hosting With Digital Ocean", slug: "how-to-set-up-hosting-with-digitalocean", cover: "how-to-set-up-hosting-with-digitalocean.jpg"},
+  // { id: "3", title: "Build a Skeleton Mongo, Express, React, Node (MERN) App", slug: "create-skeleton-app" },
 ]
 
 app.use("/static/js", express.static("../fe/built/static/js"));
@@ -19,11 +19,11 @@ app.get("/api/posts", (req, res, next) => {
   })
 })
 
-app.get("/api/posts/:id", (req, res, next) => {
-  const { id } = req.params;
+app.get("/api/posts/:slug", (req, res, next) => {
+  const { slug } = req.params;
 
   const post = posts.find((post) => {
-    return post.id === id;
+    return post.slug === slug;
   });
 
   if (!post) {

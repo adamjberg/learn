@@ -41,6 +41,7 @@
 ![](/static/img/digitalocean-14.png)
 
 ## 15. SSH into new server `ssh root@###.###.###.###`
+Type `yes` to add yourself to list of known hosts
 ![](/static/img/digitalocean-15.png)
 
 ## 16. Confirm SSH Succeeds

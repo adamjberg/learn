@@ -3,6 +3,7 @@ type Component = () => HTMLElement;
 type RouterProps = {
   routes: {
     path: string;
+    exact?: boolean;
     component: Component;
   }[];
 };
@@ -105,7 +106,8 @@ function Router(props: RouterProps) {
     container.appendChild(Link({ to: "/", children: homeLink }));
 
     for (const route of props.routes) {
-      if (route.path === path) {
+      let isActiveRoute = route.exact ? route.path === path : path.includes(route.path);
+      if (isActiveRoute) {
         el.appendChild(route.component());
       }
     }
@@ -158,8 +160,8 @@ function HomePage() {
 
     const cardProps = posts.map((post: any) => {
       return {
-        href: `/posts/${post.id}`,
-        img: "/static/img/skeleton.jpg",
+        href: `/posts/${post.slug}`,
+        img: `/static/img/${post.cover}`,
         title: post.title
       }
     });
@@ -213,20 +215,13 @@ function App() {
       routes: [
         {
           path: "/",
+          exact: true,
           component: HomePage,
         },
         {
-          path: "/posts/1",
+          path: "/posts",
           component: ViewPostPage,
-        },
-        {
-          path: "/posts/2",
-          component: ViewPostPage,
-        },
-        {
-          path: "/posts/3",
-          component: ViewPostPage,
-        },
+        }
       ],
     })
   );
