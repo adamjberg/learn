@@ -234,12 +234,54 @@ function ViewPostPage() {
     container.appendChild(h1);
     container.appendChild(body);
 
+    if (post.type === "project") {
+      container.appendChild(ProjectSubmit())
+    }
+
     el.appendChild(container);
 
     Prism.highlightAll();
   }
 
   render();
+
+  return el;
+}
+
+function ProjectSubmit() {
+  const el = document.createElement("div");
+
+  const h2 = document.createElement("h2");
+  h2.innerText = "Submit Project";
+  el.appendChild(h2);
+
+  const resultText = Div();
+  el.appendChild(resultText);
+
+  const input = document.createElement("input");
+  input.placeholder = "http://helloworld.devtails.xyz";
+  el.appendChild(input);
+
+  const button = document.createElement("button");
+  button.addEventListener("click", async function() {
+    const res = await fetch("/api/project/1/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url: input.value })
+    });
+    const jsonData = await res.json();
+    if (jsonData.success) {
+      resultText.className = "text-success";
+      resultText.innerText = "Success!"
+    } else {
+      resultText.className = "text-danger";
+      resultText.innerText = "Incorrect"
+    }
+  })
+  button.innerText = "Submit";
+  el.appendChild(button);
 
   return el;
 }

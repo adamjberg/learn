@@ -66,3 +66,11 @@ code {
 * {
   box-sizing: content-box;
 }
+
+.text-success {
+  color: #00FF00;
+}
+
+.text-danger {
+  color: #FF0000;
+}
