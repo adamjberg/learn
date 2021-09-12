@@ -171,7 +171,7 @@ function Row() {
   return el;
 }
 
-function Card(props: { href: string; img: string; title: string }) {
+function Card(props: { href: string; img: string; title: string; subTitle: string }) {
   const el = document.createElement("div");
   el.setAttribute("class", "card");
 
@@ -188,7 +188,16 @@ function Card(props: { href: string; img: string; title: string }) {
   title.innerText = props.title;
   cardBody.appendChild(title);
 
-  return Link({ to: props.href, children: el });
+  if (props.subTitle) {
+    const subTitle = document.createElement("div");
+    subTitle.setAttribute("class", "text-muted");
+    subTitle.innerText = props.subTitle;
+    cardBody.appendChild(subTitle);
+  }
+
+  const link = Link({ to: props.href, children: el });
+  link.className = "no-underline text-black";
+  return link;
 }
 
 function HomePage() {
@@ -204,6 +213,7 @@ function HomePage() {
         href: `/posts/${post.slug}`,
         img: `/static/img/${post.cover}`,
         title: post.title,
+        subTitle: post.type === "project" ? "Project" : "Post"
       };
     });
 
