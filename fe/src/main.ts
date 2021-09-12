@@ -87,15 +87,22 @@ function Link(props: {
   children?: HTMLElement;
   text?: string;
   class?: string;
+  newTab?: boolean;
 }) {
   const el = document.createElement("a");
 
-  el.addEventListener("click", function (event) {
-    event.preventDefault();
-    browserHistory.push(props.to);
-  });
+  if (!props.newTab) {
+    el.addEventListener("click", function (event) {
+      event.preventDefault();
+      browserHistory.push(props.to);
+    });
+  }
 
   el.setAttribute("href", props.to);
+
+  if (props.newTab) {
+    el.setAttribute("target", "_blank");
+  }
 
   if (props.text) {
     el.innerText = props.text;
@@ -133,6 +140,9 @@ function Router(props: RouterProps) {
 
     const aboutLink = Link({ to: "/about", text: "About", class: "ml-2" });
     container.appendChild(aboutLink);
+
+    const signUpLink = Link({ to: "https://mailchi.mp/89973d519497/learn-xyz-mailing-list", text: "Join Mailing List", class: "ml-2", newTab: true });
+    container.appendChild(signUpLink);
 
     for (const route of props.routes) {
       let isActiveRoute = route.exact
