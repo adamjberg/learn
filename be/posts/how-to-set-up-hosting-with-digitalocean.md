@@ -1,4 +1,7 @@
 ## 1. Sign Up / Login
+
+Use this [link](https://m.do.co/c/4d01489e4069) to get $100 credit for 60 days.
+
 ![](/static/img/digitalocean-1.png)
 
 ## 2. Click New Project
@@ -28,8 +31,8 @@
 ## 10. Follow Modal instructions to generate SSH Key if you don't already have one
 ![](/static/img/digitalocean-10.png)
 
-## 11. Choose a hostname
-![](/static/img/digitalocean-1## 1.png)
+## 11. Choose a hostname (leaving the default is also fine)
+![](/static/img/digitalocean-11.png)
 
 ## 12. Click "Create Droplet"
 ![](/static/img/digitalocean-12.png)
@@ -46,3 +49,7 @@ Type `yes` to add yourself to list of known hosts
 
 ## 16. Confirm SSH Succeeds
 ![](/static/img/digitalocean-16.png)
+
+## Wrap-Up
+
+If you used the affiliate link, you have $100 credit for 60 days.  After this period you will be charged for this droplet.  To avoid this, you can delete the droplet at the end of this period.
