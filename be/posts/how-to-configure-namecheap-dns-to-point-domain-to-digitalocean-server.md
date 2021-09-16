@@ -1,4 +1,4 @@
-## 1. Head to [namecheap Dashboard](https://ap.www.namecheap.com/) and Click "Manage"
+## 1. Head to [namecheap Dashboard](https://namecheap.pxf.io/GjgG5V) and Click "Manage"
 ![](/static/img/namecheap-dns-0.png)
 
 ## 2. Click Advanced DNS
