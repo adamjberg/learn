@@ -40,9 +40,6 @@
 ## 14. Copy IP Address of New Server
 ![](/static/img/digitalocean-14.png)
 
-## 15. SSH into new server `ssh root@###.###.###.###`
-Type `yes` to add yourself to list of known hosts
-![](/static/img/digitalocean-15.png)
+## 15. [SSH into your new server](/posts/how-to-ssh-into-a-server)
 
-## 16. Confirm SSH Succeeds
-![](/static/img/digitalocean-16.png)
+This will test whether the SSH key you configured in step 9 was set up correctly.

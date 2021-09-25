@@ -13,6 +13,7 @@ const posts = [
   { id: "2", title: "How to Set Up Hosting With Digital Ocean", slug: "how-to-set-up-hosting-with-digitalocean", cover: "how-to-set-up-hosting-with-digitalocean.jpg"},
   { id: "3", title: "How to Register a Domain Name With Namecheap", slug: "how-to-register-domain-with-namecheap", cover: "how-to-register-domain-with-namecheap.jpg"},
   { id: "4", title: "How to Configure Namecheap DNS to Point Domain to Digital Ocean Server", slug: "how-to-configure-namecheap-dns-to-point-domain-to-digitalocean-server", cover: "how-to-configure-namecheap-dns-to-point-domain-to-digitalocean-server.jpg"},
+  { id: "5", title: "How to SSH Into a Server", slug: "how-to-ssh-into-a-server", cover: "how-to-ssh-into-a-server.jpg"},
   // { id: "3", title: "Build a Skeleton Mongo, Express, React, Node (MERN) App", slug: "create-skeleton-app" },
 ]
 
