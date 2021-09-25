@@ -87,15 +87,22 @@ function Link(props: {
   children?: HTMLElement;
   text?: string;
   class?: string;
+  newTab?: boolean;
 }) {
   const el = document.createElement("a");
 
-  el.addEventListener("click", function (event) {
-    event.preventDefault();
-    browserHistory.push(props.to);
-  });
+  if (!props.newTab) {
+    el.addEventListener("click", function (event) {
+      event.preventDefault();
+      browserHistory.push(props.to);
+    });
+  }
 
   el.setAttribute("href", props.to);
+
+  if (props.newTab) {
+    el.setAttribute("target", "_blank");
+  }
 
   if (props.text) {
     el.innerText = props.text;
@@ -134,21 +141,8 @@ function Router(props: RouterProps) {
     const aboutLink = Link({ to: "/about", text: "About", class: "ml-2" });
     container.appendChild(aboutLink);
 
-    const ad = Div();
-    ad.innerHTML = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7354863641392041"
-                        crossorigin="anonymous"></script>
-                    <!-- Horizontal -->
-                    <ins class="adsbygoogle"
-                        style="display:block"
-                        data-ad-client="ca-pub-7354863641392041"
-                        data-ad-slot="6895518863"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>`;
-
-    container.appendChild(ad)
+    const signUpLink = Link({ to: "https://mailchi.mp/89973d519497/learn-xyz-mailing-list", text: "Join Mailing List", class: "ml-2", newTab: true });
+    container.appendChild(signUpLink);
 
     for (const route of props.routes) {
       let isActiveRoute = route.exact
@@ -177,7 +171,7 @@ function Row() {
   return el;
 }
 
-function Card(props: { href: string; img: string; title: string }) {
+function Card(props: { href: string; img: string; title: string; subTitle: string }) {
   const el = document.createElement("div");
   el.setAttribute("class", "card");
 
@@ -194,7 +188,16 @@ function Card(props: { href: string; img: string; title: string }) {
   title.innerText = props.title;
   cardBody.appendChild(title);
 
-  return Link({ to: props.href, children: el });
+  if (props.subTitle) {
+    const subTitle = document.createElement("div");
+    subTitle.setAttribute("class", "text-muted");
+    subTitle.innerText = props.subTitle;
+    cardBody.appendChild(subTitle);
+  }
+
+  const link = Link({ to: props.href, children: el });
+  link.className = "no-underline text-black";
+  return link;
 }
 
 function HomePage() {
@@ -210,6 +213,7 @@ function HomePage() {
         href: `/posts/${post.slug}`,
         img: `/static/img/${post.cover}`,
         title: post.title,
+        subTitle: post.type === "project" ? "Project" : "Post"
       };
     });
 
@@ -250,12 +254,54 @@ function ViewPostPage() {
     container.appendChild(h1);
     container.appendChild(body);
 
+    if (post.type === "project") {
+      container.appendChild(ProjectSubmit())
+    }
+
     el.appendChild(container);
 
     Prism.highlightAll();
   }
 
   render();
+
+  return el;
+}
+
+function ProjectSubmit() {
+  const el = document.createElement("div");
+
+  const h2 = document.createElement("h2");
+  h2.innerText = "Submit Project";
+  el.appendChild(h2);
+
+  const resultText = Div();
+  el.appendChild(resultText);
+
+  const input = document.createElement("input");
+  input.placeholder = "http://helloworld.devtails.xyz";
+  el.appendChild(input);
+
+  const button = document.createElement("button");
+  button.addEventListener("click", async function() {
+    const res = await fetch("/api/project/1/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url: input.value })
+    });
+    const jsonData = await res.json();
+    if (jsonData.success) {
+      resultText.className = "text-success";
+      resultText.innerText = "Success!"
+    } else {
+      resultText.className = "text-danger";
+      resultText.innerText = "Incorrect"
+    }
+  })
+  button.innerText = "Submit";
+  el.appendChild(button);
 
   return el;
 }
