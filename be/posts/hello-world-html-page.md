@@ -28,11 +28,15 @@ Add `<h1>Hello World</h1>` between the `<body></body>` HTML tags.
 
 ### Install nginx
 
+The following command should be run on the server you just created on Digital Ocean.  Make sure to [SSH into your server](/posts/how-to-ssh-into-a-server) and then run within that terminal.  [`nginx`](https://www.nginx.com/resources/wiki/) is an HTTP server that will be responsible for responding with the HTML file we have created.
+
 ```bash
 sudo apt-get install nginx
 ```
 
 ### Copy `index.html` to `/var/www`
+
+
 
 ```bash
 scp index.html root@143.198.32.125:/var/www/html/
