@@ -63,12 +63,3 @@ It will then confirm `File Name to Write: index.html` and you must press enter t
 ## Confirm the Hello World Message Appears
 
 Navigate to `https://helloworld.yourdomain.com` in your browser and confirm you can see the "Hello World" message.
-
-## Submission
-
-Copy the URL from your browser and paste below to complete the lesson
-
-<form id="submit" method="POST" action="/api/projects/1/submit">
-  <input name="url" placeholder="http://helloworld.devtails.xyz"/>
-  <input type="submit">
-</form>
