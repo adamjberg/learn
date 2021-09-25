@@ -6,27 +6,6 @@ Unfortunately deploying code can be a bit of a process. In order to not overwhel
 
 One of the neat advantages to deploying your code is that automated checks can confirm your project works as expected.  At the end of this post is a "Submit Project" section.  This one should be fairly easy to check on your own, but future projects may have more complicated behaviour that will be assessed.
 
-## Create HTML Skeleton Template
-
-```html
-// index.html
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
-</head>
-<body>
-  
-</body>
-</html>
-```
-
-## Add h1 Element
-
-Add `<h1>Hello World</h1>` between the `<body></body>` HTML tags.
-
 ## [Set Up Hosting With Digital Ocean](/posts/how-to-set-up-hosting-with-digitalocean)
 ## [Register a Domain With namecheap](/posts/how-to-register-domain-with-namecheap)
 
@@ -42,22 +21,54 @@ The following command should be run on the server you just created on Digital Oc
 sudo apt-get install nginx
 ```
 
-### Copy `index.html` to `/var/www`
+Once successfully installed, nginx will automatically start serving files out of the `/var/www/html/` folder on your remote server.  You should be able to open a browser at this point and type in the IP Address of your server.  It should display the default nginx page.
 
+### Create HTML Skeleton Template
 
+To keep things simple, we will create a file directly on the server.  To do so, we will use the [`nano`](https://www.nano-editor.org/) editor.
+
+Delete the existing default `index.html` file.  nginx adds this when first installed, we will be replacing it with our own in the next step.
+
+Create a new `index.html` file using nano.
 
 ```bash
-scp index.html root@143.198.32.125:/var/www/html/
+nano /var/www/html/index.html
 ```
 
-## Confirm `helloworld.yourdomain.com` Displays Hello World Message
+Paste the following in by right clicking and selecting paste in the terminal.
 
-Navigate to helloworld.yourdomain.com in your browser and confirm you can see the "Hello World" message.
+```html
+// index.html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>
+```
+
+#### Save and Exit nano
+
+Press `Ctrl + x` to exit nano
+
+This will trigger a prompt at the bottom that says `Save modified buffer?`.  Here you press `y` for "Yes".
+
+It will then confirm `File Name to Write: index.html` and you must press enter to finally save the file.
+
+## Confirm the Hello World Message Appears
+
+Navigate to `https://helloworld.yourdomain.com` in your browser and confirm you can see the "Hello World" message.
 
 ## Submission
 
+Copy the URL from your browser and paste below to complete the lesson
+
 <form id="submit" method="POST" action="/api/projects/1/submit">
-  <label for="url">URL</label><br>
   <input name="url" placeholder="http://helloworld.devtails.xyz"/>
   <input type="submit">
 </form>
