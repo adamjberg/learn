@@ -4,9 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "esbuild src/main.ts --bundle --outfile=built/static/js/app.js"
   },
   "dependencies": {
+    "@types/marked": "^3.0.2",
+    "@types/node": "^16.11.6",
+    "esbuild": "^0.13.12",
+    "marked": "^4.0.0",
     "typescript": "^4.4.2"
   }
 }

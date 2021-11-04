@@ -1,3 +1,5 @@
+import * as marked from "marked";
+
 type Component = () => HTMLElement;
 
 type RouterProps = {
@@ -249,7 +251,7 @@ function ViewPostPage() {
     h1.innerText = post.title;
 
     const body = document.createElement("div");
-    body.innerHTML = marked(post.body);
+    body.innerHTML = marked.parse(post.body);
 
     container.appendChild(h1);
     container.appendChild(body);
@@ -309,7 +311,7 @@ function ProjectSubmit() {
 function AboutPage() {
   const el = Container();
 
-  el.innerHTML = marked(`
+  el.innerHTML = marked.parse(`
   ## Hello, my name is Adam
 
   and after 11 years of programming, I'm still disappointed in the state of programming tutorials across the web and the pace that new developers are able to level up.  
@@ -363,4 +365,6 @@ class XDom {
   }
 }
 
-XDom.render(App, document.getElementById("root"));
+(function() {
+  XDom.render(App, document.getElementById("root"));
+})()
